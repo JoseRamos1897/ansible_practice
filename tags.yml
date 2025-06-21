@@ -1,0 +1,24 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update cache for apt distros
+    tags: apt,ubuntu
+    package:
+      update_cache: yes
+    when: ansible_distribution == "Linux Mint" or ansible_distribution == "Ubuntu"
+
+
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update cache for dnf disros
+    tags: dnf,red_hat
+    dnf:
+      update_cache: yes
+    when: ansible_distribution == "Rocky"
+
