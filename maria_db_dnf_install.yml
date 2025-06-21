@@ -1,0 +1,11 @@
+---
+
+- hosts: dnf_group
+  become: true
+  tasks:
+
+  - name: maria db install for dnf distros
+    dnf:
+      name: mariadb
+      state: latest
+
