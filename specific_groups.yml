@@ -1,0 +1,30 @@
+---
+
+- hosts: all 
+  become: true
+  tasks:
+
+  - name: install updates f/apt distros
+    apt:
+      update_cache: yes
+      upgrade: yes
+    when: ansible_distribution == "Linux Mint" or ansible_distribution == "Ubuntu"
+
+  - name: install updates f/dnf distros
+    dnf :
+      update_cache: yes
+      update_only: yes
+    when: ansible_distribution == "Rocky"
+  
+
+- hosts: apt_group
+  become: true
+  tasks:
+
+  - name: install apache/php f/apt distros
+    apt:
+      name:
+        - apache2
+        - libapache2-mod-php
+      state: latest
+
