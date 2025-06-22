@@ -1,0 +1,26 @@
+---
+
+- hosts: apt_group
+  become: true
+  tasks:
+
+  - name: start/enable apache2 f/ both apt group
+    tags: apache,apt
+    service:
+      name: apache2
+      state: started
+      enabled: yes
+
+  - name: edit a text file f.mint vm
+    lineinfile: 
+      path: /home/mint/edit_file.txt
+      regexp: '^kenan'
+      line: kenan yildiz MotM
+    when: ansible_distribution== "Linux Mint"
+    register: variable
+
+  - name: restart apache2 if variable changed
+    service:
+      name: apache2
+      state: restarted
+    when: variable.changed 
